@@ -1,11 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Platform } from 'react-native';
 import dummy from './assets/dummy-image-square.jpg';
 import * as ImagePicker from 'expo-image-picker';
+import * as Sharing from 'expo-sharing';
 import { useState } from 'react';
 
 export default function App() {
   const [image,setImage] = useState(null);
+
+  const openSharing = async () => {
+    if(Platform.OS !== 'web'){
+      await Sharing.shareAsync(image);
+    }else{
+      alert('You can not share on your platform')
+    }
+    
+  }
 
   const openImagePicker = async () =>{
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -29,8 +39,12 @@ export default function App() {
         <Image source={ {uri: image} } style={ {width:300, height:300} }/>
         <Text style={ {color:'red', fontSize:20} }>Ici mon texte de mon app</Text>
         <TouchableOpacity
-        onPress={openImagePicker} >
-          <Text style={styles.button}>Pick a photo</Text>
+        onPress={openSharing} >
+          <Text style={styles.button}>Share ur picture</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+        onPress={ () => {setImage(null) } } >
+          <Text style={styles.button}>Cancel</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
     </View>)
@@ -60,7 +74,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     color:'white',
     padding: '1%',
-    borderRadius: '15%',
-    textAlign: 'center',
   },
 });
