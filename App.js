@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import dummy from './assets/dummy-image-square.jpg'
 
 export default function App() {
   return (
     <View style={styles.container}>
+      <Image source={ dummy } style={ {width:300, height:300} }/>
+      <Image source={ {uri: 'https://cdn.pixabay.com/photo/2022/01/22/16/54/book-6957870_960_720.jpg'} } style={ {width:300, height:300} }/>
       <Text style={ {color:'red', fontSize:20} }>Ici mon texte de mon app</Text>
       <TouchableOpacity
       onPress={()=> {alert("Votre photo")}} >
@@ -24,9 +25,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{
-    backgroundColor: "red",
-    color:"white",
-    padding:"5px",
-    borderRadius:"5px"
+    backgroundColor: 'red',
+    color:'white',
+    padding: '15 px',
   },
 });
